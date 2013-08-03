@@ -11,6 +11,10 @@ $stdout.sync = true
 
 class TheApp < Sinatra::Base
 
+  configure :production, :development do
+    enable :logging
+  end
+
   use Rack::Rewrite do
     r301 %r{/start/?}, "#{$config.basepath}"
     r301 %r{/randor-basics/?}, "#{$config.basepath}/wistia-basics-getting-started"
@@ -89,6 +93,7 @@ class TheApp < Sinatra::Base
   # the doc. omg this is cool.
   post '/update' do
     return 403 unless params[:update_key] == $config.update_key
+    logger.info "running `rake nuclear_update` #{Time.now}"
     spawn('rake', 'nuclear_update', chdir: File.dirname(__FILE__))
     'We can rebuild him. We have the technology. We can make him better than he was. Better...stronger...faster.'
   end
