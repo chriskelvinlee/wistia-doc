@@ -16,6 +16,10 @@ gem 'tire', '~> 0.4.2'
 gem 'rack-rewrite', '~> 1.2.1'
 gem 'unicorn'
 
+group :development do
+  gem 'god', '~> 0.13.2'
+end
+
 group :test do
   gem 'rspec', '~> 2.13.0'
   gem 'rack-test', '~> 0.6.2'
